@@ -14,6 +14,7 @@ pub use llm_interface::{
     llms::local::LlmLocalTrait,
     requests::{
         completion::{CompletionRequest, CompletionResponse},
+        embeddings::{EmbeddingsRequest, EmbeddingsResponse},
         logit_bias::LogitBiasTrait,
         req_components::RequestConfigTrait,
     },

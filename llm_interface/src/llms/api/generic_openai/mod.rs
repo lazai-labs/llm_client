@@ -3,13 +3,17 @@ use super::{
     config::{ApiConfig, ApiConfigTrait},
     openai::completion::OpenAiCompletionRequest,
 };
-use crate::requests::completion::{
-    error::CompletionError, request::CompletionRequest, response::CompletionResponse,
+use crate::requests::{
+    completion::{
+        error::CompletionError, request::CompletionRequest, response::CompletionResponse,
+    },
+    embeddings::{EmbeddingsError, EmbeddingsRequest, EmbeddingsResponse},
 };
 use llm_devices::logging::LoggingConfig;
 use llm_models::api_model::ApiLlmModel;
 use reqwest::header::{HeaderMap, HeaderValue, AUTHORIZATION};
 use secrecy::{ExposeSecret, Secret};
+use serde_json::json;
 
 pub struct GenericApiBackend {
     pub(crate) client: ApiClient<GenericApiConfig>,
@@ -27,6 +31,7 @@ impl GenericApiBackend {
             model,
         })
     }
+
     pub(crate) async fn completion_request(
         &self,
         request: &CompletionRequest,
@@ -41,6 +46,26 @@ impl GenericApiBackend {
         {
             Err(e) => Err(CompletionError::ClientError(e)),
             Ok(res) => Ok(CompletionResponse::new_from_openai(request, res)?),
+        }
+    }
+
+    pub(crate) async fn embeddings_request(
+        &self,
+        request: &EmbeddingsRequest,
+    ) -> crate::Result<EmbeddingsResponse, EmbeddingsError> {
+        match self
+            .client
+            .post(
+                "/embeddings",
+                json!({
+                    "input": request.input,
+                    "model": request.model,
+                }),
+            )
+            .await
+        {
+            Ok(res) => Ok(res),
+            Err(e) => Err(EmbeddingsError::ClientError(e)),
         }
     }
 }

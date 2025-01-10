@@ -2,6 +2,7 @@ use crate::requests::{
     completion::{
         error::CompletionError, request::CompletionRequest, response::CompletionResponse,
     },
+    embeddings::{EmbeddingsError, EmbeddingsRequest, EmbeddingsResponse},
     logit_bias::LogitBias,
 };
 use llm_models::tokenizer::LlmTokenizer;
@@ -32,6 +33,17 @@ impl LlmBackend {
             LlmBackend::OpenAi(b) => b.completion_request(request).await,
             LlmBackend::Anthropic(b) => b.completion_request(request).await,
             LlmBackend::GenericApi(b) => b.completion_request(request).await,
+        }
+    }
+
+    pub(crate) async fn embeddings_request(
+        &self,
+        request: &EmbeddingsRequest,
+    ) -> crate::Result<EmbeddingsResponse, EmbeddingsError> {
+        match self {
+            LlmBackend::OpenAi(b) => b.embeddings_request(request).await,
+            LlmBackend::GenericApi(b) => b.embeddings_request(request).await,
+            _ => unimplemented!(),
         }
     }
 

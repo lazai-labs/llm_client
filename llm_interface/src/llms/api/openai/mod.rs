@@ -5,14 +5,18 @@ use super::{
     client::ApiClient,
     config::{ApiConfig, ApiConfigTrait},
 };
-use crate::requests::completion::{
-    error::CompletionError, request::CompletionRequest, response::CompletionResponse,
+use crate::requests::{
+    completion::{
+        error::CompletionError, request::CompletionRequest, response::CompletionResponse,
+    },
+    embeddings::{EmbeddingsError, EmbeddingsRequest, EmbeddingsResponse},
 };
 use completion::OpenAiCompletionRequest;
 use llm_devices::logging::LoggingConfig;
 use llm_models::api_model::ApiLlmModel;
 use reqwest::header::{HeaderMap, HeaderValue, AUTHORIZATION};
 use secrecy::{ExposeSecret, Secret};
+use serde_json::json;
 
 /// Default v1 API base url
 pub const OPENAI_API_HOST: &str = "api.openai.com/v1";
@@ -47,6 +51,26 @@ impl OpenAiBackend {
         {
             Err(e) => Err(CompletionError::ClientError(e)),
             Ok(res) => Ok(CompletionResponse::new_from_openai(request, res)?),
+        }
+    }
+
+    pub(crate) async fn embeddings_request(
+        &self,
+        request: &EmbeddingsRequest,
+    ) -> crate::Result<EmbeddingsResponse, EmbeddingsError> {
+        match self
+            .client
+            .post(
+                "/embeddings",
+                json!({
+                    "input": request.input,
+                    "model": request.model,
+                }),
+            )
+            .await
+        {
+            Ok(res) => Ok(res),
+            Err(e) => Err(EmbeddingsError::ClientError(e)),
         }
     }
 }
