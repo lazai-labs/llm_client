@@ -23,6 +23,7 @@ pub use llm_utils as utils;
 
 use std::sync::Arc;
 
+#[derive(Clone)]
 pub struct LlmClient {
     pub backend: Arc<LlmBackend>,
 }
