@@ -24,3 +24,4 @@ thiserror.workspace = true
 tiktoken-rs = "0.5.9"
 tokenizers = "0.20.0"
 tracing.workspace = true
+half.workspace = true
