@@ -177,10 +177,6 @@ impl CompletionRequest {
             self.stop_sequences
                 .set_stop_word_no_result(no_result_stop_word);
         }
-
-        // if step.stop_word_steps_done {
-        //     self.set_req_stop_word_steps_done();
-        // }
     }
 }
 
