@@ -7,7 +7,6 @@ use crate::requests::{
 use llm_models::tokenizer::LlmTokenizer;
 use llm_prompt::{LlmPrompt, PromptTokenizer};
 pub mod api;
-#[cfg(any(feature = "llama_cpp_backend", feature = "mistral_rs_backend"))]
 pub mod local;
 
 pub enum LlmBackend {
