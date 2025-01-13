@@ -128,10 +128,7 @@ pub fn get_target_directory() -> crate::Result<PathBuf> {
     let manifest_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     match find_target_in_ancestors(&manifest_dir) {
         Some(target_dir) => Ok(target_dir),
-        None => crate::bail!(
-            "Could not find target directory in ancestors of {}",
-            manifest_dir.display()
-        ),
+        None => Ok("".into()),
     }
 }
 
