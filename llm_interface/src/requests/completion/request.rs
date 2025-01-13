@@ -192,6 +192,7 @@ impl std::fmt::Display for CompletionRequest {
             writeln!(f, "  logit_bias: {}", logit_bias)?;
         }
         writeln!(f, "  grammar_string: {:?}", self.grammar_string)?;
-        write!(f, "  config: {}", self.config)
+        write!(f, "  config: {}", self.config)?;
+        write!(f, "  tools: {:?}", self.tools)
     }
 }

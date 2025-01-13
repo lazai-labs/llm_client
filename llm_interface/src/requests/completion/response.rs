@@ -30,7 +30,8 @@ impl std::fmt::Display for CompletionResponse {
         writeln!(f, "    finish_reason: {}", self.finish_reason)?;
         write!(f, "    generation_settings: {}", self.generation_settings)?;
         write!(f, "    timing_usage: {}", self.timing_usage)?;
-        write!(f, "    token_usage: {}", self.token_usage)
+        write!(f, "    token_usage: {}", self.token_usage)?;
+        write!(f, "    token_calls: {:?}", self.tool_calls)
     }
 }
 
