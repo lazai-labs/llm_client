@@ -1,5 +1,4 @@
 pub mod chunking;
-pub mod clean_html;
 pub mod clean_text;
 pub mod concatenator;
 pub mod extract;

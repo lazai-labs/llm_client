@@ -36,3 +36,4 @@ tokio = "1.40.0"
 tracing = "0.1.40"
 url = "2.5.2"
 half = "*"
+reqwest = { version = "0.12.7", default-features = false, features = ["rustls-tls"] }

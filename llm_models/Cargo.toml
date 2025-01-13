@@ -13,7 +13,7 @@ anyhow.workspace = true
 byteorder = "1.5.0"
 colorful.workspace = true
 dotenvy.workspace = true
-hf-hub = { version = "0.3.2" }
+hf-hub = { version = "0.4.1", default-features = false, features = ["ureq", "tokio", "rustls-tls"] }
 indenter.workspace = true
 llm_prompt.workspace = true
 minijinja = "2.0.1"
