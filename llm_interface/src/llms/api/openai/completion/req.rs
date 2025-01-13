@@ -60,11 +60,17 @@ pub struct OpenAiCompletionRequest {
 
     /// The tools for the request, default: None
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub tools: Option<Vec<ToolDefinition>>,
+    pub tools: Option<Vec<OpenAiToolDefinition>>,
 
     /// The tool choice for the request, default: None
     #[serde(skip_serializing_if = "Option::is_none")]
     pub tool_choice: Option<String>,
+}
+
+#[derive(Clone, Serialize, Debug, Deserialize)]
+pub struct OpenAiToolDefinition {
+    pub r#type: String,
+    pub function: ToolDefinition,
 }
 
 impl OpenAiCompletionRequest {
@@ -92,7 +98,15 @@ impl OpenAiCompletionRequest {
             temperature: Some(req.config.temperature),
             top_p: req.config.top_p,
             tools: if !req.tools.is_empty() {
-                Some(req.tools.clone())
+                Some(
+                    req.tools
+                        .iter()
+                        .map(|tool| OpenAiToolDefinition {
+                            r#type: "function".to_string(),
+                            function: tool.clone(),
+                        })
+                        .collect(),
+                )
             } else {
                 None
             },
