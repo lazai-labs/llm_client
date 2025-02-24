@@ -86,14 +86,14 @@ impl LlmPrompt {
         self.clear_built_prompt();
         match self {
             LlmPrompt::ChatTemplatePrompt(p) => p.set_generation_prefix(generation_prefix),
-            LlmPrompt::OpenAiPrompt(_) => unimplemented!(),
+            LlmPrompt::OpenAiPrompt(_) => {}
         }
     }
 
     pub fn clear_generation_prefix(&self) {
         match self {
             LlmPrompt::ChatTemplatePrompt(p) => p.clear_generation_prefix(),
-            LlmPrompt::OpenAiPrompt(_) => unimplemented!(),
+            LlmPrompt::OpenAiPrompt(_) => {}
         }
     }
 
