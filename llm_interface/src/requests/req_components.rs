@@ -178,9 +178,14 @@ impl RequestConfig {
             Some(self.safety_tokens),
             self.requested_response_tokens,
         )?;
-        self.actual_request_tokens = Some(actual_request_tokens);
+        let tokens = if actual_request_tokens == 0 {
+            total_prompt_tokens
+        } else {
+            actual_request_tokens
+        };
+        self.actual_request_tokens = Some(tokens);
         if self.requested_response_tokens.is_none() {
-            self.requested_response_tokens = Some(actual_request_tokens);
+            self.requested_response_tokens = Some(tokens);
         }
         Ok(())
     }
