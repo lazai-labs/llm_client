@@ -17,8 +17,8 @@ pub enum CompletionError {
         errors: Vec<CompletionError>,
     },
     // Continue on these types
-    #[error("ReponseContentEmpty: Response had no content")]
-    ReponseContentEmpty,
+    #[error("ResponseContentEmpty: Response had no content")]
+    ResponseContentEmpty,
     #[error("StopLimitRetry: stopped_limit == true && retry_stopped_limit == true")]
     StopLimitRetry,
     #[error(

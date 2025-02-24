@@ -7,8 +7,8 @@ impl CompletionResponse {
         req: &CompletionRequest,
         res: MistralCompletionResponse,
     ) -> Result<Self, CompletionError> {
-        let choice = if res.choices.is_empty() || res.choices[0].text.is_empty() {
-            return Err(CompletionError::ReponseContentEmpty);
+        let choice = if res.choices.is_empty() {
+            return Err(CompletionError::ResponseContentEmpty);
         } else {
             &res.choices[0]
         };

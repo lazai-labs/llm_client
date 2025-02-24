@@ -7,8 +7,8 @@ impl CompletionResponse {
         req: &CompletionRequest,
         res: OpenAiCompletionResponse,
     ) -> Result<Self, CompletionError> {
-        let choice = if res.choices.is_empty() || res.choices[0].message.content.is_none() {
-            return Err(CompletionError::ReponseContentEmpty);
+        let choice = if res.choices.is_empty() {
+            return Err(CompletionError::ResponseContentEmpty);
         } else {
             &res.choices[0]
         };

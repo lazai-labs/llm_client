@@ -33,16 +33,16 @@ impl CompletionResponse {
         };
 
         if res.content.is_empty() {
-            return Err(CompletionError::ReponseContentEmpty);
+            return Err(CompletionError::ResponseContentEmpty);
         }
 
         if res.content.len() > 1 {
-            return Err(CompletionError::ReponseContentEmpty);
+            return Err(CompletionError::ResponseContentEmpty);
         }
         let content = res
             .content
             .first()
-            .ok_or_else(|| CompletionError::ReponseContentEmpty)?
+            .ok_or_else(|| CompletionError::ResponseContentEmpty)?
             .text()
             .to_owned();
 
